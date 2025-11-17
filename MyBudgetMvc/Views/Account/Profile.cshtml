@@ -1,0 +1,28 @@
+@model MyBudgetMvc.Models.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Профіль";
+}
+
+<h2>Профіль користувача</h2>
+
+@if (Model == null)
+{
+    <p>@(ViewBag.Message ?? "Дані профілю відсутні.")</p>
+}
+else
+{
+    <dl class="row">
+        <dt class="col-sm-3">Логін</dt>
+        <dd class="col-sm-9">@Model.UserName</dd>
+
+        <dt class="col-sm-3">ПІБ</dt>
+        <dd class="col-sm-9">@Model.FullName</dd>
+
+        <dt class="col-sm-3">Телефон</dt>
+        <dd class="col-sm-9">@Model.Phone</dd>
+
+        <dt class="col-sm-3">Email</dt>
+        <dd class="col-sm-9">@Model.Email</dd>
+    </dl>
+}

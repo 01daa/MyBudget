@@ -1,0 +1,34 @@
+@{
+    ViewData["Title"] = "Підпрограма: Бюджет";
+}
+
+<h2>Підпрограма: розрахунок залишку бюджету</h2>
+
+<p>
+    Ця сторінка дозволяє ввести місячний дохід та витрати і отримати розрахунок залишку бюджету.
+</p>
+
+<form method="post">
+    <div class="form-group">
+        <label for="income">Дохід за місяць</label>
+        <input class="form-control" type="number" step="0.01" name="income" id="income" value="@ViewBag.Income" />
+    </div>
+
+    <div class="form-group">
+        <label for="expenses">Витрати за місяць</label>
+        <input class="form-control" type="number" step="0.01" name="expenses" id="expenses" value="@ViewBag.Expenses" />
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-2">Розрахувати</button>
+</form>
+
+@if (ViewBag.Balance != null)
+{
+    <hr />
+    <h4>Результат</h4>
+    <p>Залишок бюджету: <strong>@ViewBag.Balance</strong></p>
+    @if ((decimal)ViewBag.Balance < 0)
+    {
+        <p class="text-danger">Увага: витрати перевищують дохід.</p>
+    }
+}

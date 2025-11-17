@@ -1,0 +1,60 @@
+@{
+    ViewData["Title"] = "Підпрограма: Звіт";
+}
+
+<h2>Підпрограма: простий звіт за витратами</h2>
+
+<p>
+    Введіть витрати за місяць за категоріями – система підрахує загальну суму.
+</p>
+
+<form method="post">
+    <div class="form-group">
+        <label for="food">Харчування</label>
+        <input class="form-control" type="number" step="0.01" name="food" id="food" value="@ViewBag.Food" />
+    </div>
+
+    <div class="form-group">
+        <label for="transport">Транспорт</label>
+        <input class="form-control" type="number" step="0.01" name="transport" id="transport" value="@ViewBag.Transport" />
+    </div>
+
+    <div class="form-group">
+        <label for="fun">Розваги</label>
+        <input class="form-control" type="number" step="0.01" name="fun" id="fun" value="@ViewBag.Fun" />
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-2">Побудувати звіт</button>
+</form>
+
+@if (ViewBag.Total != null)
+{
+    <hr />
+    <h4>Результат</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Категорія</th>
+                <th>Сума</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Харчування</td>
+                <td>@ViewBag.Food</td>
+            </tr>
+            <tr>
+                <td>Транспорт</td>
+                <td>@ViewBag.Transport</td>
+            </tr>
+            <tr>
+                <td>Розваги</td>
+                <td>@ViewBag.Fun</td>
+            </tr>
+            <tr>
+                <th>Разом</th>
+                <th>@ViewBag.Total</th>
+            </tr>
+        </tbody>
+    </table>
+}

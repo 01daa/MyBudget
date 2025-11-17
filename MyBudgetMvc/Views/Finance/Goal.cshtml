@@ -1,0 +1,30 @@
+@{
+    ViewData["Title"] = "Підпрограма: Фінансова ціль";
+}
+
+<h2>Підпрограма: прогрес до фінансової цілі</h2>
+
+<p>
+    Введіть поточну накопичену суму та бажану цільову суму – система покаже відсоток виконання цілі.
+</p>
+
+<form method="post">
+    <div class="form-group">
+        <label for="currentAmount">Поточна сума</label>
+        <input class="form-control" type="number" step="0.01" name="currentAmount" id="currentAmount" value="@ViewBag.CurrentAmount" />
+    </div>
+
+    <div class="form-group">
+        <label for="targetAmount">Цільова сума</label>
+        <input class="form-control" type="number" step="0.01" name="targetAmount" id="targetAmount" value="@ViewBag.TargetAmount" />
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-2">Розрахувати прогрес</button>
+</form>
+
+@if (ViewBag.Progress != null)
+{
+    <hr />
+    <h4>Результат</h4>
+    <p>Прогрес до цілі: <strong>@ViewBag.Progress %</strong></p>
+}
