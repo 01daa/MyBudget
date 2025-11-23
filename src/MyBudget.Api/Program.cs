@@ -9,12 +9,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Логи
 builder.Host.UseSerilog((ctx, lc) => lc.ReadFrom.Configuration(ctx.Configuration));
 
-// Сервисы
+// Сервіси
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Коннект-строка с надёжным фолбэком
+// Конект-рядок з надійним фолбеком
 var conn =
     builder.Configuration.GetConnectionString("db") ??
     Environment.GetEnvironmentVariable("ConnectionStrings__db") ??
@@ -29,7 +29,7 @@ var app = builder.Build();
 
 app.UseSerilogRequestLogging();
 
-// Swagger ВСЕГДА
+// Swagger ЗАВЖДИ
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
@@ -37,13 +37,12 @@ app.UseSwaggerUI(c =>
     c.RoutePrefix = "swagger";
 });
 
-// Без HTTPS в Вагранте
 // app.UseHttpsRedirection();
 
 app.UseRouting();
 app.MapControllers();
 
-// Авто-міграция (не валим приложение, если что-то пошло не так)
+// Авто-міграция
 if (!app.Environment.IsEnvironment("Testing"))
 {
     try
@@ -58,7 +57,7 @@ if (!app.Environment.IsEnvironment("Testing"))
     }
 }
 
-// Редирект с корня на Swagger
+// Редірект з корня на Swagger
 app.MapGet("/", () => Results.Redirect("/swagger"));
 
 app.Run();
