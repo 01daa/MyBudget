@@ -4,6 +4,7 @@ Abramova Darina
 Strilets Olexandr
 Malatsion Maxim
 
+
 Персональний менеджер витрат: категорії, бюджети, місячні підсумки, Swagger та автоматизовані тести.
 
 ## Стек
