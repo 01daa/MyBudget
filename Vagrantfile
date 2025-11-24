@@ -40,7 +40,7 @@ EOF
     m.vm.network "private_network", ip: "10.10.0.21"
     m.vm.network "forwarded_port", guest: 5080, host: 15080, host_ip: "127.0.0.1", auto_correct: true
     m.vm.provider "virtualbox" do |vb|
-      vb.memory = 2048
+      vb.memory = 4096
       vb.cpus = 2
     end
     m.vm.provision "shell", inline: <<-SHELL
