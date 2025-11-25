@@ -1,30 +1,113 @@
 ﻿@{
-    ViewData["Title"] = "Лабораторна робота 3";
+    ViewData["Title"] = "MyBudget React dashboard";
 }
 
-<h1>Лабораторна робота 3</h1>
-<h2>Розробка ASP.NET Core MVC застосунку з використанням OAuth2</h2>
+<div class="container mt-4">
+    <h1 class="mb-3">MyBudget: панель на React</h1>
+    <p>Эта страница рендерится с помощью React-компонентов.</p>
+    <div id="react-root"></div>
+</div>
 
-<p>
-    Тема застосунку: <strong>MyBudget</strong> – простий сервіс для роботи з особистим бюджетом.
-</p>
+@section Scripts {
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@@babel/standalone/babel.min.js"></script>
 
-<p>
-    У межах цієї роботи реалізовано:
-</p>
+    <script type="text/babel">
+    function Card(props) {
+        return (
+            <div className="card">
+                <h3>{props.title}</h3>
+                <p className="card-value">{props.value}</p>
+            </div>
+        );
+    }
 
-<ul>
-    <li>сторінка реєстрації користувача з валідацією введених даних;</li>
-    <li>сторінка профілю користувача з відображенням збереженої інформації;</li>
-    <li>три сторінки з підпрограмами для роботи з бюджетом (розрахунок залишку, прогрес за фінансовою ціллю, простий звіт);</li>
-    <li>підготовка до підключення авторизації та автентифікації через OAuth2-провайдера.</li>
-</ul>
+    function App() {
+        const categories = [
+            { name: "Продукти", limit: 3000, spent: 1500 },
+            { name: "Транспорт", limit: 800, spent: 600 },
+            { name: "Розваги", limit: 1200, spent: 200 }
+        ];
 
-<p>
-    Доступ до сторінок з підпрограмами призначений лише для авторизованих користувачів (це буде реалізовано за допомогою OAuth2 на наступному етапі).
-</p>
+        const totalSpent = categories.reduce((s, c) => s + c.spent, 0);
+        const totalLimit = categories.reduce((s, c) => s + c.limit, 0);
+        const percent = Math.round((totalSpent / totalLimit) * 100);
 
-<p>
-    Для переходу до реєстрації скористайтеся посиланням
-    <a asp-controller="Account" asp-action="Register">"Реєстрація користувача"</a>.
-</p>
+        return (
+            <div>
+                <div className="cards">
+                    <Card title="Витрачено цього місяця" value={totalSpent + " ₴"} />
+                    <Card title="Місячний ліміт" value={totalLimit + " ₴"} />
+                    <Card title="Заповнення бюджету" value={percent + " %"} />
+                </div>
+
+                <h2>Категорії</h2>
+                <table className="table">
+                    <thead>
+                        <tr>
+                            <th>Категорія</th>
+                            <th>Ліміт</th>
+                            <th>Витрачено</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {categories.map(c => (
+                            <tr key={c.name}>
+                                <td>{c.name}</td>
+                                <td>{c.limit}</td>
+                                <td>{c.spent}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        );
+    }
+
+        const root = ReactDOM.createRoot(document.getElementById("react-root"));
+        root.render(<App />);
+    </script>
+
+    <style>
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .card {
+            border-radius: 12px;
+            padding: 16px 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            background: #ffffff;
+        }
+
+        .card h3 {
+            margin-bottom: 8px;
+            font-size: 18px;
+        }
+
+        .card-value {
+            font-size: 22px;
+            font-weight: 600;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+        }
+
+        .table th,
+        .table td {
+            border: 1px solid #ddd;
+            padding: 8px 12px;
+        }
+
+        .table th {
+            background: #f5f5f5;
+        }
+    </style>
+}
